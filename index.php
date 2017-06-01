@@ -3,7 +3,7 @@
 //require_once 'sugaophp/autoLoad.php';
 define('BASEDIR',__DIR__);
 require_once __DIR__.'/sugaophp/autoLoad.php';
-require_once __DIR__.'/sugaophp/function.php';
+//require_once __DIR__.'/sugaophp/function.php';
 spl_autoload_register("\\sugaophp\\autoLoad::autoload");
 //$a=new sugaophp\a();
 //$a->a();
@@ -17,5 +17,5 @@ spl_autoload_register("\\sugaophp\\autoLoad::autoload");
 //$controllerstr='App\\Controller\\'.$controller.'Controller';
 //$test=new $controllerstr();
 //$test->$action();
-$route=new sugaophp\Route();
-$route->parse();
+$app=new sugaophp\App();
+$app->init();
