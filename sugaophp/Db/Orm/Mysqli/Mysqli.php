@@ -1,8 +1,7 @@
 <?php
-
 namespace sugaophp\Db\Orm\Mysqli;
 
-class MySqli {
+class MySqli implements Dbinterface{
 
     public $mysqli_con;
 

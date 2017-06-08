@@ -4,6 +4,7 @@ namespace sugaophp\Db\Orm;
 
 class Db {
 
+    public $db;
     public $tableName;
     public $sql;
     public $select;
@@ -12,6 +13,19 @@ class Db {
     public function table($tableName = '') {
         $this->tableName = $tableName;
         return $this;
+    }
+
+//选择数据库  'DB_TYPE' => 'mysqli',
+//    public function getdb() {
+    public function __construct() {
+        if (empty($this->db)) {
+            $config = \sugaophp\Config::init();
+            $dbtype = $config['DB_CONFIG']['DB_TYPE'];
+            $dbclass = "\\sugaophp\\Db\\Orm\\Mysqli\\" . $dbtype;
+            dump($dbtype);dump("啦啦啦啦");
+            $this->db = new $dbclass();
+        }
+        return $this->db;
     }
 
     /**
@@ -23,13 +37,13 @@ class Db {
         $sign = 0;
         foreach ($data as $k => $v) {
             if ($sign == 0) {
-                $where .= $k . ' = "' . $v.'"';
-            }else{
-                $where .= ' and '.$k . ' = "' . $v.'"';
+                $where .= $k . ' = "' . $v . '"';
+            } else {
+                $where .= ' and ' . $k . ' = "' . $v . '"';
             }
             $sign++;
         }
-        $this->where= $where;
+        $this->where = $where;
         return $this;
     }
 
@@ -47,7 +61,7 @@ class Db {
             default:
                 $field = '';
                 foreach ($data as $v) {
-                    $field.= $v . ',';
+                    $field .= $v . ',';
                 }
                 $field = substr($field, 0, strlen($field) - 1);
                 break;
@@ -58,25 +72,27 @@ class Db {
     }
 
     public function findOne() {
-        $mysqli = new \sugaophp\Db\Orm\Mysqli\MySqli();
+//        $mysqli = new \sugaophp\Db\Orm\Mysqli\MySqli();
         $this->buildSql();
-        $rows = $mysqli->findOne($this->sql);
+        $rows = $this->db->findOne($this->sql);
         return $rows;
     }
 
     public function findAll() {
-        $mysqli = new \sugaophp\Db\Orm\Mysqli\MySqli();
+//        $mysqli = new \sugaophp\Db\Orm\Mysqli\MySqli();
         $this->buildSql();
-        $rows = $mysqli->findAll($this->sql);
+        $rows = $this->db->findAll($this->sql);
         return $rows;
     }
-    public function insert($query){
-        $mysqli = new \sugaophp\Db\Orm\Mysqli\MySqli();
-        $query="
+
+    public function insert($query) {
+//        $mysqli = new \sugaophp\Db\Orm\Mysqli\MySqli();
+        $query = "
             insert into `user`(`name`,`age`) values('a',20),('b',18),('c',19);
                 ";
-        $mysqli->query($query);
+        $this->db->query($query);
     }
+
     public function buildSql() {
         $this->sql = 'select ';
         if (!empty($this->select)) {
@@ -84,7 +100,7 @@ class Db {
         }
         $this->sql .= " from " . $this->tableName;
         if (!empty($this->where)) {
-            $this->sql .= ' where '.$this->where;
+            $this->sql .= ' where ' . $this->where;
         }
         dump($this->sql);
 //        if(!empty($this->orderby)){  limit
