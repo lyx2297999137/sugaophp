@@ -1,6 +1,6 @@
 <?php
 
-namespace sugaophp\Db\Mysqli;
+namespace sugaophp\Db\Orm\Mysqli;
 
 class MySqli {
 
@@ -52,7 +52,7 @@ class MySqli {
         return $res;
     }
 
-    public function select($sql) {
+    public function findAll($sql) {
 //        $sql = "SELECT id,username,age FROM user";
         $mysqli_result = $this->mysqli_con->query($sql);
 //var_dump($mysqli_result);
@@ -93,8 +93,17 @@ class MySqli {
             $mysqli_result->free();
             return $rows;
         } else {
-            echo '查询错误或者结果集中没有记录';
+            return '查询错误或者结果集中没有记录';
         }
+    }
+
+    public function findOne($sql) {
+        $mysqli_result = $this->mysqli_con->query($sql);
+        $row = [];
+        if ($mysqli_result && $mysqli_result->num_rows > 0) {
+            $row = $mysqli_result->fetch_assoc();
+        }
+        return $row;
     }
 
 }
