@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Home\Controller;
 //http://www.sugaophp12.com/?controller=db&action=dbinsert
 class DbController {
     //**测试数据库连接  。创建数据表

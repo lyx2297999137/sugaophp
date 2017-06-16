@@ -4,9 +4,10 @@ class Route{
     function parse(){
 //        $module=$_GET['module'];
         $config=Config::init();
+        $module=isset($_GET['module'])?$_GET['module']:$config['DEFAULT_MODULE'];
         $controller=isset($_GET['controller'])?$_GET['controller']:$config['DEFAULT_CONTROLLER'];
         $action=isset($_GET['action'])?$_GET['action']:$config['DEFAULT_ACTION'];
-        $controllerstr='App\\Controller\\'.$controller.'Controller';
+        $controllerstr='App\\'.$module.'\\'.'Controller\\'.$controller.'Controller';
         $controllerModel=new $controllerstr();
         $controllerModel->$action();
     }

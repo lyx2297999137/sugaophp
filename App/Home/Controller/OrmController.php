@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Home\Controller;
 use sugaophp\Db\Orm\Db;
 //http://www.sugaophp12.com/?controller=orm&action=dbfindOne
 class OrmController {
