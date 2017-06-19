@@ -1,3 +1,5 @@
 nbproject
 b.php
 useless
+vendor
+composer.lock

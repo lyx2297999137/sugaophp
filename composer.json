@@ -1,0 +1,6 @@
+{
+    "require": {
+        "sugao2013/getui":"@dev",
+        "sugao2013/composer_test":"@dev"
+    }
+}
