@@ -1,6 +1,7 @@
 {
     "require": {
-        "sugao2013/getui":"@dev",
-        "sugao2013/composer_test":"@dev"
+       "symfony/var-dumper":"~3.3",
+       "filp/whoops": "2.*",
+       "sugao2013/composer_test":"dev-master"
     }
 }
