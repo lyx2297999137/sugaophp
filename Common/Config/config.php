@@ -13,5 +13,9 @@ return [
         'DB_PASSWORD' => 'root',
         'DB_NAME' => 'sugaophp',
     ],
+    'log' => [
+        'type' =>'LogFile',
+        'path' => 'Log/runtime',
+    ]
 ];
 

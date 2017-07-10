@@ -13,5 +13,24 @@ class Config {
         }
         return self::$config;
     }
+   
+    /**
+     * 读取配置
+     * @param type $name
+     * @return type
+     * @throws \Exception
+     */
+    public static function getConfig($name = '')
+    {
+        if(!self::$config){
+            self::init();
+        }
+        if($name){
+            if (isset(self::$config[$name])){
+                return self::$config[$name] ;
+            }
+        }
+        throw new \Exception('没有该项配置，请检查配置文件');
+    }
 
 }
