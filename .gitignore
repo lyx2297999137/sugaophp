@@ -3,3 +3,4 @@ b.php
 useless
 vendor
 composer.lock
+view/TemplatesCache

@@ -1,12 +1,13 @@
 <?php
+
 return [
-    'DEFAULT_MODULE'=>'Home',
-    'DEFAULT_CONTROLLER'=>'Index',
-    'DEFAULT_ACTION'=>'index',
+    'DEFAULT_MODULE' => 'Home',
+    'DEFAULT_CONTROLLER' => 'Index',
+    'DEFAULT_ACTION' => 'index',
     //数据库配置
-    'DB_CONFIG'=>[
+    'DB_CONFIG' => [
         //'DB_TYPE' => 'mysqli',
-         'DB_TYPE' => 'mysqli',
+        'DB_TYPE' => 'mysqli',
         'DB_HOST' => 'localhost',
         'DB_PORT' => '3306',
         'DB_USERNAME' => 'root',
@@ -14,8 +15,25 @@ return [
         'DB_NAME' => 'sugaophp',
     ],
     'log' => [
-        'type' =>'LogFile',
+        'type' => 'LogFile',
         'path' => 'Log/runtime',
-    ]
+    ],
+    'template' => [
+        /**
+         * 模版路径
+         * @var string path
+         */
+        'path' => BASEDIR . '/View/',
+        /**
+         * 1 开启模版刷新, 0 关闭模版刷新
+         * @var int refresh
+         */
+        'refresh' => 1,
+        /**
+         * 设置模板后缀
+         * @var string suffix
+         */
+        'suffix' => 'html'
+    ],
 ];
 

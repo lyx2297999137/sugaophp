@@ -8,6 +8,7 @@ class Route{
         $controller=isset($_GET['controller'])?$_GET['controller']:$config['DEFAULT_CONTROLLER'];
         $action=isset($_GET['action'])?$_GET['action']:$config['DEFAULT_ACTION'];
         $controllerstr='App\\'.$module.'\\'.'Controller\\'.$controller.'Controller';
+        Superglobal::$methods=array('module'=>$module,'controller' => $controller, 'action' => $action);
         $controllerModel=new $controllerstr();
         $controllerModel->$action();
     }

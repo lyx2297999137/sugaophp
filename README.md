@@ -1,2 +1,2 @@
 # sugaophp
-a foolish man sugao study php framework
+**使用之前先composer install 生成vendor目录下的插件**
