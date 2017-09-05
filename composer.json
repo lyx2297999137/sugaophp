@@ -2,6 +2,7 @@
     "require": {
        "symfony/var-dumper":"~3.3",
        "filp/whoops": "2.*",
-       "sugao2013/composer_test":"dev-master"
+       "sugao2013/composer_test":"dev-master",
+        "monolog/monolog":"~1.23.0"
     }
 }

@@ -10,6 +10,7 @@ class App {
     public function init() {
         $this->require_base();
         $this->whoops(); //这个必须在路由之前
+//        $this->monolog();
         $this->route();
     }
 
@@ -63,6 +64,10 @@ class App {
 
 // Register the handler with PHP, and you're set!
         $run->register();
+    }
+    public function monolog(){
+        $monolog=new Monolog();
+        $monolog->init();
     }
 
 }
