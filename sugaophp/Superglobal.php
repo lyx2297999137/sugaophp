@@ -15,14 +15,7 @@ namespace sugaophp;
  * 输出outputs的值: pirnt_r(Superglobal::$outputs)
  * </code>
  *
- * @link http://www.cdvphp.com
- * @author <fanjiapeng@126.com>
- * @package CdvPHP\Superglobal
  */
-class Sg extends Superglobal
-{
-	
-}
 abstract class Superglobal
 {
 	/** @var array $inputs 常用于获取$_GET、$_POST、$_COOKIE的值 */
@@ -42,6 +35,13 @@ abstract class Superglobal
 	 */
 	public static $methods = array();
 
+        /**
+         * 配置 config.php文件
+         *sugao
+         * @var type 
+         */
+        public static $config=array();
+        
 	public static function __callStatic($name, $arguments)
 	{/*{{{*/
 		 // 注意: $name 的值区分大小写

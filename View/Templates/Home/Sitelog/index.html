@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"> 
+        <title>最近请求数据展示</title>
+        <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
+        <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <button type="button" class="btn btn-warning" id="dellog">删除请求记录</button>
+        <table class="table">
+            <caption>最近请求数据展示</caption>
+            <thead>
+                <tr>
+                    {loop $key_arr $key $val}
+                    <th>{$val}</th>
+                    {/loop}
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {loop $show_arr $key $val}
+                <tr>
+                    {loop $val $k $v}
+                    <th>{$v}</th>
+                    {/loop}
+                </tr>
+                {/loop}
+            </tbody>
+        </table>
+    </body>
+    <script>
+        $(document).ready(function () {
+            $("#dellog").click(function () {
+                $.post("/?controller=sitelog&action=delete_file", {}, function (msg) {
+                    console.log(msg);
+//                    if (msg.rs_code == 1000) {
+                    if (msg['rs_code'] === 1000) {
+                        alert('清除成功');
+                        location.reload();
+                    } else {
+                        console.log(msg['rs_code']);
+                        alert('清除失败');
+                    }
+                },'json');
+            });
+        });
+    </script>
+</html>

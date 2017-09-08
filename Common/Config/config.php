@@ -1,6 +1,8 @@
 <?php
 
-return [
+$config= [
+    'HANDLE_DEBUG'=>false,   //异常记录
+    'WHOOPS_DEBUG'=>true,   //编代码时的调试
     'DEFAULT_MODULE' => 'Home',
     'DEFAULT_CONTROLLER' => 'Index',
     'DEFAULT_ACTION' => 'index',
@@ -14,10 +16,12 @@ return [
         'DB_PASSWORD' => 'root',
         'DB_NAME' => 'sugaophp',
     ],
+    //S方法的
     'log' => [
         'type' => 'LogFile',
         'path' => 'Log/runtime',
     ],
+    //
     'template' => [
         /**
          * 模版路径
@@ -36,4 +40,4 @@ return [
         'suffix' => 'html'
     ],
 ];
-
+//return $config;

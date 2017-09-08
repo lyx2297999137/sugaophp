@@ -7,10 +7,13 @@ use Whoops\Handler\JsonResponseHandler;
 
 class App {
 
+    private $config;
+
     public function init() {
         $this->require_base();
-        $this->whoops(); //这个必须在路由之前
-//        $this->monolog();
+        $this->whoops();
+        $this->handle();
+        $this->sitelog();
         $this->route();
     }
 
@@ -20,7 +23,10 @@ class App {
     private function require_base() {
         require_once BASEDIR . '/Common/Common/function.php';
         require_once BASEDIR . '/sugaophp/function.php';
-//        $this->config=require_once BASEDIR.'/Common/Config/config.php';这个牛逼啊。直接就返回了
+        require_once BASEDIR . '/Common/Config/config.php';
+        //这个弄成全局的config?
+        Superglobal::$config = $config;
+        $this->config = $config;
     }
 
     /**
@@ -32,42 +38,53 @@ class App {
     }
 
     /**
+     * 异常记录以及请求参数记录
+     * trigger_error这个函数是什么？
+     * author sugao
+     */
+    private function handle() {
+        $route = new Handle();
+        $route->init();
+    }
+    /**
+     * 记录请求信息
+     * xiaoliao 
+     */
+    private function sitelog(){
+        Superglobal::$inputs = array(
+            'get' => $_GET,
+            'post' => $_POST,
+            'cookie' => $_COOKIE
+        );
+        if(isset($_GET['controller'])&&$_GET['controller']==='sitelog'){ // && !isset($_GET['s'])
+           
+        }elseif(isset($_GET['s'])&&$_GET['s']==="\/favicon.ico"){  //这个暂时无效，得想解决方法
+            
+        }
+        else{
+             Factory::getInstance('handle_log')->siteInfo(); 
+        }
+    }
+    
+    /**
+     * 注意事项： 这个必须在路由之前($this->route())
      * debug工具
      * http://filp.github.io/whoops/
      */
     private function whoops() {
-//    public function whoops() {
+        if ($this->config['WHOOPS_DEBUG']) {
+            $run = new \Whoops\Run;
+            $handler = new PrettyPageHandler;
 
-        $run = new \Whoops\Run;
-        $handler = new PrettyPageHandler;
+            $handler->setPageTitle("苏羔,你这里有一个问题啊.");
+            $run->pushHandler($handler);
 
-// Add some custom tables with relevant info about your application,
-// that could prove useful in the error page:
-//        $handler->addDataTable('Killer App Details', array(
-//            "Important Data" => $myApp->getImportantData(),
-//            "Thingamajig-id" => $someId
-//        ));
+            if (\Whoops\Util\Misc::isAjaxRequest()) {
+                $run->pushHandler(new JsonResponseHandler);
+            }
 
-// Set the title of the error page:
-//        $handler->setPageTitle("Whoops! There was a problem.");
-         $handler->setPageTitle("苏羔! 这里有一个问题啊.");
-        $run->pushHandler($handler);
-
-// Add a special handler to deal with AJAX requests with an
-// equally-informative JSON response. Since this handler is
-// first in the stack, it will be executed before the error
-// page handler, and will have a chance to decide if anything
-// needs to be done.
-        if (\Whoops\Util\Misc::isAjaxRequest()) {
-            $run->pushHandler(new JsonResponseHandler);
+            $run->register();
         }
-
-// Register the handler with PHP, and you're set!
-        $run->register();
-    }
-    public function monolog(){
-        $monolog=new Monolog();
-        $monolog->init();
     }
 
 }

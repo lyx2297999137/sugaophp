@@ -61,15 +61,17 @@ class Template {
      */
     private function _checktplrefresh($maintpl, $subtpl, $timecompare, $templateid, $cachefile, $file) {/* {{{ */
         $int_subtpl = ($subtpl && file_exists($subtpl)) ? filemtime($subtpl) : 0;
-        $arr_template = Config::getConfig('template');
+//        $arr_template = Config::getConfig('template');        
+        $arr_template =Superglobal::$config['template'];
         $tplrefresh = $arr_template['refresh'];
-
-        if (empty($timecompare) || $tplrefresh = 1 || ($tplrefresh > 1 && !(time() % $tplrefresh))) {
-            if (empty($timecompare) || $int_subtpl > $timecompare) {
+//        dump($tplrefresh);
+//        dump($timecompare);
+//        if (empty($timecompare) || $tplrefresh = 1 || ($tplrefresh > 1 && !(time() % $tplrefresh))) {
+//            if (empty($timecompare) || $int_subtpl > $timecompare) {
                 $this->_parse($maintpl, $templateid, $file, $cachefile);
                 return TRUE;
-            }
-        }
+//            }
+//        }
 
         return FALSE;
     }
@@ -90,8 +92,8 @@ class Template {
         $tplfile = '';
         $filemtime = 0;
 
-        $arr_template = Config::getConfig('template');
-
+//        $arr_template = Config::getConfig('template');
+ $arr_template =Superglobal::$config['template'];
         if (!$tpldir) {
             $tpldir = $arr_template['path'];
         }
@@ -132,6 +134,7 @@ class Template {
      * return string 模板文件内容
      */
     private function _parse($tplfile, $templateid, $file, $cachefile) {/* {{{ */
+//        dump('parse');
         $fp = @fopen($tplfile, 'rb');
         if ($fp === FALSE) {
             throw new RuntimeException("template not found ({$tplfile})");
@@ -240,6 +243,12 @@ class Template {
         $template = preg_replace_callback("/\<script[^\>]*?src=\"(.+?)\"(.*?)\>\s*\<\/script\>/is", function($mathes) {
             return template::stripscriptamp("{$mathes[1]}", "{$mathes[2]}");
         }, $template);
+        
+        $template = preg_replace_callback("/\<script\>(.*)?\<\/script\>/is", function($mathes) {
+            return template::stripscriptamp1("{$mathes[1]}");
+        }, $template);
+       
+        
         $template = preg_replace_callback("/([\n\r\t]*)\{block\s+([a-zA-Z0-9_\[\]]+)\}(.+?)\{\/block\}/is", function($mathes) {
             return $mathes[1] . template::stripblock("{$mathes[2]}", "{$mathes[3]}");
         }, $template);
@@ -360,6 +369,10 @@ class Template {
         return "<script src=\"$s\" type=\"text/javascript\"$extra></script>";
     }
 
+     public static function stripscriptamp1($s) {/* {{{ */
+        $s = str_replace('&amp;', '&', $s);
+        return "<script>$s</script>";
+    }
 /* }}} */
 
     /**
