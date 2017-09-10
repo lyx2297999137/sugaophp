@@ -28,20 +28,20 @@ class HandleLog
      * @return viod
      */
     public function __construct()
-    {/*{{{*/
+    {
         if(!$this->full_path)
         {
             $this->full_path = BASEDIR . DIRECTORY_SEPARATOR . 'View/Runtime/HandleLogs';
         }
-        
         if(!is_dir($this->full_path))
         {
-            if(@mkdir($this->full_path) === FALSE)
+//            if(@mkdir($this->full_path) === FALSE)
+            if(WSTCreateDir($this->full_path) === FALSE)
             {
                 trigger_error("{$this->full_path} mkdir failed!", E_USER_ERROR);
             }
         }
-    }/*}}}*/
+    }
 
     /**
      * website访问日志记录
@@ -50,7 +50,7 @@ class HandleLog
      * @return void
      */
     public function siteInfo($reponse = '')
-    {/*{{{*/
+    {
         $info = '';
         $data = array();
 
@@ -67,11 +67,12 @@ class HandleLog
 //        $data['server_gettime'] = $_SERVER['REQUEST_TIME_FLOAT'];
 
         $info  = '[LOG_TIME] '. date('Y-m-d H:i:s') . "\t";
+//          $info  = '[LOG_TIME] '. $_SERVER['REQUEST_TIME_FLOAT'] . "\t";
         $info .= "[IP] {$ip} \t";
         $info .= "[SITE] " . json_encode($data);
         $info .= '[*]lineEnd[*]';
         error_log($info . PHP_EOL, 3, $this->full_path . DIRECTORY_SEPARATOR . $this->site_file_name. '.' . date('Ymd'));
-    }/*}}}*/
+    }
 
        /* 保存json返回数据 
         * xiaoliao

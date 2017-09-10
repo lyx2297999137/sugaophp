@@ -10,6 +10,7 @@ class App {
     private $config;
 
     public function init() {
+        $this->_setDefaultTimezone();
         $this->require_base();
         $this->whoops();
         $this->handle();
@@ -46,26 +47,26 @@ class App {
         $route = new Handle();
         $route->init();
     }
+
     /**
      * 记录请求信息
      * xiaoliao 
      */
-    private function sitelog(){
-        Superglobal::$inputs = array(
-            'get' => $_GET,
-            'post' => $_POST,
-            'cookie' => $_COOKIE
-        );
-        if(isset($_GET['controller'])&&$_GET['controller']==='sitelog'){ // && !isset($_GET['s'])
-           
-        }elseif(isset($_GET['s'])&&$_GET['s']==="\/favicon.ico"){  //这个暂时无效，得想解决方法
-            
-        }
-        else{
-             Factory::getInstance('handle_log')->siteInfo(); 
+    private function sitelog() {
+        if ($this->config['HANDLE_DEBUG']) {
+            Superglobal::$inputs = array(
+                'get' => $_GET,
+                'post' => $_POST,
+                'cookie' => $_COOKIE
+            );
+            if (isset($_GET['controller']) && $_GET['controller'] === 'sitelog') { // && !isset($_GET['s'])
+            } elseif (isset($_GET['s']) && $_GET['s'] === "\/favicon.ico") {  //这个暂时无效，得想解决方法
+            } else {
+                Factory::getInstance('handle_log')->siteInfo();
+            }
         }
     }
-    
+
     /**
      * 注意事项： 这个必须在路由之前($this->route())
      * debug工具
@@ -87,4 +88,12 @@ class App {
         }
     }
 
+    /**
+     * 设置时区 Asia/Shanghai
+     * 2017年9月10日17:16:41 。没有设置这个会报错
+     * @return void
+     */
+    private static function _setDefaultTimezone() {
+        date_default_timezone_set('Asia/Shanghai');
+    }
 }

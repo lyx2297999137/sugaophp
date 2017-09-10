@@ -100,13 +100,14 @@ class Template {
 
         $tpldir = substr($tpldir, -1) == '/' ? $tpldir : "{$tpldir}/";
         $tplfile = "{$tpldir}Templates/{$file}.{$arr_template['suffix']}";
-
-        $cachefile = "{$tpldir}TemplatesCache/{$templateid}.%s.tpl.php";
+        $cachePath="{$tpldir}TemplatesCach";
+        if(!file_exists_case($cachePath)){
+            WSTCreateDir($cachePath);
+        }
+        $cachefile = $cachePath."/{$templateid}.%s.tpl.php";
+//        $cachefile = "{$tpldir}TemplatesCache/{$templateid}.%s.tpl.php";
         $cachefile = sprintf($cachefile, str_replace('/', '.', $file));
-
         if (!file_exists($tplfile)) {
-//            dump($tplfile);
-//            dump($cachefile);die;
             throw new RuntimeException("template not found ({$tplfile})");
         }
 
