@@ -100,7 +100,7 @@ class Template {
 
         $tpldir = substr($tpldir, -1) == '/' ? $tpldir : "{$tpldir}/";
         $tplfile = "{$tpldir}Templates/{$file}.{$arr_template['suffix']}";
-        $cachePath="{$tpldir}TemplatesCach";
+        $cachePath="{$tpldir}TemplatesCache";
         if(!file_exists_case($cachePath)){
             WSTCreateDir($cachePath);
         }

@@ -1,6 +1,6 @@
 <?php
 namespace sugaophp\Db\Orm\Mysqli;
-
+use sugaophp\Superglobal;
 class MySqli implements Dbinterface{
 
     public $mysqli_con;
@@ -8,7 +8,8 @@ class MySqli implements Dbinterface{
     public function __construct() {
         if (empty($this->mysqli_con)) {
             //mysqli 连接
-            $config = \sugaophp\Config::init();
+//            $config = \sugaophp\Config::init();
+            $config = Superglobal::$config;
 //            $con = new \mysqli('localhost', 'root', 'root', 'sugaophp');
             $con = new \mysqli($config['DB_CONFIG']['DB_HOST'], $config['DB_CONFIG']['DB_USERNAME'], $config['DB_CONFIG']['DB_PASSWORD'], $config['DB_CONFIG']['DB_NAME']);
 //          $con=@new mysqli('localhost','root','root','sugaophp');//这个也没用啊。垃圾。你自己才垃圾。命名空间的问题

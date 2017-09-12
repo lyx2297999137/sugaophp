@@ -3,6 +3,7 @@
 namespace App\Home\Controller;
 use sugaophp\Db\Orm\Db;
 //http://www.sugaophp12.com/?controller=orm&action=dbfindOne
+//http://www.sugaophp12.com/?controller=orm&action=activeRecord
 class OrmController {
     //查询数据
      public function dbfindAll(){
@@ -21,5 +22,12 @@ class OrmController {
     //插入记录
     public function dbinsert(){
         
+    }
+    public function activeRecord(){
+        $user =new \App\Home\Model\User();
+        $user->name='张三';
+        $user->age='20';
+        $result=$user->save();
+        dump($result);
     }
 }

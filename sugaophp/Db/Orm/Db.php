@@ -1,7 +1,7 @@
 <?php
 
 namespace sugaophp\Db\Orm;
-
+use sugaophp\Superglobal;
 class Db {
 
     public $db;
@@ -19,10 +19,12 @@ class Db {
 //    public function getdb() {
     public function __construct() {
         if (empty($this->db)) {
-            $config = \sugaophp\Config::init();
+//            $config = \sugaophp\Config::init();
+//            $dbtype = $config['DB_CONFIG']['DB_TYPE'];
+             $config = Superglobal::$config;
             $dbtype = $config['DB_CONFIG']['DB_TYPE'];
             $dbclass = "\\sugaophp\\Db\\Orm\\Mysqli\\" . $dbtype;
-            dump($dbtype);dump("啦啦啦啦");
+//            dump($dbtype);dump("啦啦啦啦");
             $this->db = new $dbclass();
         }
         return $this->db;
