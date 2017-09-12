@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 浏览器友好的变量输出
  * @param mixed $var 变量
@@ -7,58 +8,60 @@
  * @param boolean $strict 是否严谨 默认为true
  * @return void|string
  */
-//function dump($var, $echo=true, $label=null, $strict=true) {
-//    $label = ($label === null) ? '' : rtrim($label) . ' ';
-//    if (!$strict) {
-//        if (ini_get('html_errors')) {
-//            $output = print_r($var, true);
-//            $output = '<pre>' . $label . htmlspecialchars($output, ENT_QUOTES) . '</pre>';
-//        } else {
-//            $output = $label . print_r($var, true);
-//        }
-//    } else {
-//        ob_start();
-//        var_dump($var);
-//        $output = ob_get_clean();
-//        if (!extension_loaded('xdebug')) {
-//            $output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
-//            $output = '<pre>' . $label . htmlspecialchars($output, ENT_QUOTES) . '</pre>';
-//        }
-//    }
-//    if ($echo) {
-//        echo($output);
-//        return null;
-//    }else
-//        return $output;
-//}
+function dump1($var, $echo = true, $label = null, $strict = true) {
+    $label = ($label === null) ? '' : rtrim($label) . ' ';
+    if (!$strict) {
+        if (ini_get('html_errors')) {
+            $output = print_r($var, true);
+            $output = '<pre>' . $label . htmlspecialchars($output, ENT_QUOTES) . '</pre>';
+        } else {
+            $output = $label . print_r($var, true);
+        }
+    } else {
+        ob_start();
+        var_dump($var);
+        $output = ob_get_clean();
+        if (!extension_loaded('xdebug')) {
+            $output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
+            $output = '<pre>' . $label . htmlspecialchars($output, ENT_QUOTES) . '</pre>';
+        }
+    }
+    if ($echo) {
+        echo($output);
+        return null;
+    } else
+        return $output;
+}
+
 /**
  * 循环删除指定目录下的文件及文件夹
  * @param string $dirpath 文件夹路径
  */
-function WSTDelDir($dirpath){
-	$dh=opendir($dirpath);
-	while (($file=readdir($dh))!==false) {
-		if($file!="." && $file!="..") {
-		    $fullpath=$dirpath."/".$file;
-		    if(!is_dir($fullpath)) {
-		        unlink($fullpath);
-		    } else {
-		        WSTDelDir($fullpath);
-		        rmdir($fullpath);
-		    }
-	    }
-	}	 
-	closedir($dh);
+function WSTDelDir($dirpath) {
+    $dh = opendir($dirpath);
+    while (($file = readdir($dh)) !== false) {
+        if ($file != "." && $file != "..") {
+            $fullpath = $dirpath . "/" . $file;
+            if (!is_dir($fullpath)) {
+                unlink($fullpath);
+            } else {
+                WSTDelDir($fullpath);
+                rmdir($fullpath);
+            }
+        }
+    }
+    closedir($dh);
     $isEmpty = 1;
-	$dh=opendir($dirpath);
-	while (($file=readdir($dh))!== false) {
-		if($file!="." && $file!="..") {
-			$isEmpty = 0;
-			break;
-		}
-	}
-	return $isEmpty;
+    $dh = opendir($dirpath);
+    while (($file = readdir($dh)) !== false) {
+        if ($file != "." && $file != "..") {
+            $isEmpty = 0;
+            break;
+        }
+    }
+    return $isEmpty;
 }
+
 /**
  * 建立文件夹
  * @param string $aimUrl
@@ -66,27 +69,29 @@ function WSTDelDir($dirpath){
  */
 function WSTCreateDir($aimUrl) {
 //    $aimUrl= lastLetter($aimUrl);
-	$aimUrl = str_replace('', '/', $aimUrl);
-	$aimDir = '';
-	$arr = explode('/', $aimUrl);
-	$result = true;
-	foreach ($arr as $str) {
-		$aimDir .= $str . '/';
-		if (!file_exists_case($aimDir)) {
-			$result = mkdir($aimDir,0777);
-		}
-	}
-        dump($result);
-	return $result;
+    $aimUrl = str_replace('', '/', $aimUrl);
+    $aimDir = '';
+    $arr = explode('/', $aimUrl);
+    $result = true;
+    foreach ($arr as $str) {
+        $aimDir .= $str . '/';
+        if (!file_exists_case($aimDir)) {
+            $result = mkdir($aimDir, 0777);
+        }
+    }
+    dump($result);
+    return $result;
 }
-function  lastLetter($aimUrl){
-     $lastLetter=substr($aimUrl,-1,1);
-     if($lastLetter=="/"){
-         return $aimUrl;
-     }else{
-         return $aimUrl.'/';
-     }
+
+function lastLetter($aimUrl) {
+    $lastLetter = substr($aimUrl, -1, 1);
+    if ($lastLetter == "/") {
+        return $aimUrl;
+    } else {
+        return $aimUrl . '/';
+    }
 }
+
 /**
  * 建立文件
  * @param string $aimUrl
@@ -95,15 +100,15 @@ function  lastLetter($aimUrl){
  */
 function WSTCreateFile($aimUrl, $overWrite = false) {
 //     $aimUrl= lastLetter($aimUrl);
-	if (file_exists_case($aimUrl) && $overWrite == false) {
-		return false;
-	} elseif (file_exists_case($aimUrl) && $overWrite == true) {
-		WSTUnlinkFile($aimUrl);
-	}
-	$aimDir = dirname($aimUrl);
-	WSTCreateDir($aimDir);
-	touch($aimUrl);
-	return true;
+    if (file_exists_case($aimUrl) && $overWrite == false) {
+        return false;
+    } elseif (file_exists_case($aimUrl) && $overWrite == true) {
+        WSTUnlinkFile($aimUrl);
+    }
+    $aimDir = dirname($aimUrl);
+    WSTCreateDir($aimDir);
+    touch($aimUrl);
+    return true;
 }
 
 /**
@@ -112,13 +117,14 @@ function WSTCreateFile($aimUrl, $overWrite = false) {
  * @return boolean
  */
 function WSTUnlinkFile($aimUrl) {
-	if (file_exists_case($aimUrl)) {
-		unlink($aimUrl);
-		return true;
-	} else {
-		return false;
-	}
+    if (file_exists_case($aimUrl)) {
+        unlink($aimUrl);
+        return true;
+    } else {
+        return false;
+    }
 }
+
 //define('IS_WIN',strstr(PHP_OS, 'WIN') ? 1 : 0 );
 /**
  * 区分大小写的文件存在判断
@@ -128,7 +134,7 @@ function WSTUnlinkFile($aimUrl) {
 function file_exists_case($filename) {
 //    dump($filename);
 //    if (is_file($filename)) {
-        if (file_exists($filename)) {
+    if (file_exists($filename)) {
 //          if (IS_WIN) {
 //        if (IS_WIN && APP_DEBUG) {
 //             dump(basename(realpath($filename)));
@@ -139,4 +145,40 @@ function file_exists_case($filename) {
         return true;
     }
     return false;
+}
+
+/**
+  $arr=["a"=>['name'=>'n1','value'=>4],"b"=>['name'=>'n2','value'=>2],"c"=>['name'=>'n3','value'=>8],"d"=>['name'=>'n4','value'=>6]];
+  uasort($arr,"uasort_func");
+  $tourism_area_list = [
+            'quangang' => [
+                'name' => '泉港',
+                'num' => 0,
+                'value' => 6
+            ],
+            'huian' => [
+                'name' => '惠安',
+                'num' => 3,
+                'value' => 6
+            ],
+            'kaifaqu' => [
+                'name' => '开发区',
+                'num' => 0,
+                'value' => 0
+            ]
+        ];
+            uasort($tourism_area_list, "uasort_func");
+  从大到小排序
+ * 有个缺点，就是全部为0的顺序也改变了
+ * xiaoliao
+ */ 
+//    global $nc=0;这里来个全局变量？
+function uasort_func($a, $b) {
+    if ($a['value'] == $b['value']) {
+        if ($a['num'] == $b['num']) {
+            return 0;
+        }
+        return ($a['num'] < $b['num']) ? 1 : -1;
+    }
+    return ($a['value'] < $b['value']) ? 1 : -1;
 }
