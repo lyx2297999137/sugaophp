@@ -99,6 +99,8 @@ class Db {
         $this->sql = 'select ';
         if (!empty($this->select)) {
             $this->sql .= $this->select;
+        }else{
+            $this->sql .= " * ";
         }
         $this->sql .= " from " . $this->tableName;
         if (!empty($this->where)) {

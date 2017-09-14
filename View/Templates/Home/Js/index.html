@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>二维数组排序</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>二维数组排序</div>
+    </body>
+    <script type="text/javascript" src="/Public/common/js/jquery-3.2.1.min.js"></script>
+    <script>
+        var obj = [
+  {
+    order: 0,
+    name: '鲤城',
+    vote: 1,
+    mj: 20,
+  }, {
+    order: 1,
+    name: '丰泽',
+    vote: 200,
+    mj: 20,
+  }, {
+    order: 2,
+    name: '洛江',
+    vote: 100,
+    mj: 100,
+  }, {
+    order: 3,
+    name: '泉港',
+    vote: 5,
+    mj: 4,
+  }, {
+    order: 4,
+    name: '晋江',
+    vote: 200,
+    mj: 200,
+  }, {
+    order: 5,
+    name: '安南',
+    vote: 100,
+    mj: 100,
+  },
+];
+obj.sort(function(a, b) {
+    if(b.vote==a.vote){
+        if(b.mj==a.mj){
+            return 0;
+        }else{
+            return b.mj-a.mj;
+        }
+    } 
+    return b.vote-a.vote;
+});
+console.log(obj);
+    </script>
+</html>
