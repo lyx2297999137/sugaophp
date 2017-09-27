@@ -21,6 +21,13 @@ $config= [
         'type' => 'LogFile',
         'path' => 'Log/runtime',
     ],
+    //app钩子
+    'app' => [
+        'app_init' => [
+            '\\sugaophp\\Behavior\\appconfig',
+            '\\sugaophp\\Behavior\\appconfig2',
+        ],
+    ],
     //
     'template' => [
         /**
