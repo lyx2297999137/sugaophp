@@ -3,6 +3,7 @@
 $config= [
     'HANDLE_DEBUG'=>false,   //异常记录
     'WHOOPS_DEBUG'=>true,   //编代码时的调试
+    'URL_MODEL'=>2 , //url模式， 1 代表普通模式  2代表PATHINFO 模式
     'DEFAULT_MODULE' => 'Home',
     'DEFAULT_CONTROLLER' => 'Index',
     'DEFAULT_ACTION' => 'index',

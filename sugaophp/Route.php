@@ -8,13 +8,24 @@ class Route {
     function parse() {
         $this->app_init();
         $config = Superglobal::$config;
-        $module = isset($_GET['module']) ? $_GET['module'] : $config['DEFAULT_MODULE'];
-        $controller = isset($_GET['controller']) ? $_GET['controller'] : $config['DEFAULT_CONTROLLER'];
-        $action = isset($_GET['action']) ? $_GET['action'] : $config['DEFAULT_ACTION'];
-        $controllerstr = 'App\\' . $module . '\\' . 'Controller\\' . $controller . 'Controller';
-        Superglobal::$methods = array('module' => $module, 'controller' => $controller, 'action' => $action);
-        $controllerModel = new $controllerstr();
-        $controllerModel->$action();
+        if ($config['URL_MODEL'] == 1) {
+            $module = isset($_GET['module']) ? $_GET['module'] : $config['DEFAULT_MODULE'];
+            $controller = isset($_GET['controller']) ? $_GET['controller'] : $config['DEFAULT_CONTROLLER'];
+            $action = isset($_GET['action']) ? $_GET['action'] : $config['DEFAULT_ACTION'];
+            $controllerstr = 'App\\' . $module . '\\' . 'Controller\\' . $controller . 'Controller';
+            Superglobal::$methods = array('module' => $module, 'controller' => $controller, 'action' => $action);
+            $controllerModel = new $controllerstr();
+            $controllerModel->$action();
+        }
+        else if($config['URL_MODEL'] ==2){
+            $request_uri=$_SERVER['REQUEST_URI'];
+            $uri_arr=explode('/', $request_uri);
+            $controller=$uri_arr[1];
+            $action=$uri_arr[2];
+            $controllerstr = 'App\\Api\\' . 'Controller\\' . $controller . 'Controller';
+            $controllerModel = new $controllerstr();
+            $controllerModel->$action();
+        }
     }
 
     public function app_init() {
