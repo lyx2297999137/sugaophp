@@ -4,7 +4,7 @@ namespace sugaophp;
 
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Handler\JsonResponseHandler;
-
+use sugaophp\Log\phplog\Startlog;
 class App {
 
     private $config;
@@ -85,6 +85,8 @@ class App {
             }
 
             $run->register();
+        }else{
+            Startlog::go();
         }
     }
 

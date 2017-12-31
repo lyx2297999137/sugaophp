@@ -63,26 +63,40 @@ function WSTDelDir($dirpath) {
 }
 
 /**
- * 建立文件夹
- * @param string $aimUrl
- * @return viod
+ * 循环建立文件夹
+ * @param type $aimUrl  /View/Runtime/my_error_log
+ * @return type
  */
 function WSTCreateDir($aimUrl) {
-//    $aimUrl= lastLetter($aimUrl);
     $aimUrl = str_replace('', '/', $aimUrl);
     $aimDir = '';
     $arr = explode('/', $aimUrl);
     $result = true;
     foreach ($arr as $str) {
         $aimDir .= $str . '/';
-        if (!file_exists_case($aimDir)) {
-            $result = mkdir($aimDir, 0777);
+        if (!file_exists(BASEDIR . $aimDir)) {
+            $result = mkdir(BASEDIR . $aimDir, 0777);
         }
     }
-    dump($result);
     return $result;
 }
-
+/**
+ * 日志
+ * @param type $info
+ * @param type $filepath
+ * @param type $filename
+ * @param type $die
+ */
+function my_error_log($info=array(),$filepath='/temp',$filename='temp',$die=false){
+    $dir_path=BASEDIR.'/View/Runtime/'.$filepath;
+    if(!is_dir($dir_path)){
+        WSTCreateDir('/View/Runtime/'.$filepath);
+    }
+    error_log(date('Y-m-d H:i:s') . "==" .var_export($info,true)."\t\n\n" . PHP_EOL, 3, BASEDIR.'/View/Runtime/'.$filepath .DIRECTORY_SEPARATOR. $filename. '.' . date('Ymd'));
+    if($die){
+        die;
+    }
+}
 function lastLetter($aimUrl) {
     $lastLetter = substr($aimUrl, -1, 1);
     if ($lastLetter == "/") {
