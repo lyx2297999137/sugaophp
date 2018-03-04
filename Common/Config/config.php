@@ -3,19 +3,19 @@
 $config= [
     'HANDLE_DEBUG'=>false,   //异常记录
     'WHOOPS_DEBUG'=>true,   //编代码时的调试
-    'URL_MODEL'=>2 , //url模式， 1 代表普通模式  2代表PATHINFO 模式
+    'URL_MODEL'=>1 , //url模式， 1 代表普通模式  2代表PATHINFO 模式
     'DEFAULT_MODULE' => 'Home',
     'DEFAULT_CONTROLLER' => 'Index',
     'DEFAULT_ACTION' => 'index',
     //数据库配置
     'DB_CONFIG' => [
         //'DB_TYPE' => 'mysqli',
-        'DB_TYPE' => 'mysqli',
-        'DB_HOST' => 'localhost',
-        'DB_PORT' => '3306',
-        'DB_USERNAME' => 'root',
-        'DB_PASSWORD' => 'root',
-        'DB_NAME' => 'sugaophp',
+//        'DB_TYPE' => 'mysqli',
+//        'DB_HOST' => 'localhost',
+//        'DB_PORT' => '3306',
+//        'DB_USERNAME' => 'root',
+//        'DB_PASSWORD' => 'root',
+//        'DB_NAME' => 'sugaophp',
     ],
     //S方法的
     'log' => [

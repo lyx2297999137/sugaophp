@@ -22,12 +22,22 @@ class App {
      * 引入基本的文件
      */
     private function require_base() {
+        require_once BASEDIR . '/sugaophp/define.php';
         require_once BASEDIR . '/Common/Common/function.php';
         require_once BASEDIR . '/sugaophp/function.php';
         require_once BASEDIR . '/Common/Config/config.php';
         //这个弄成全局的config?
+//        Superglobal::$config = $config;
+//        $this->config = $config;
+        require_once BASEDIR . '/Common/Config/default_config.php';
+        //这个弄成全局的config?
+        $config['DB_CONFIG']=array_merge($default_config['DB_CONFIG'],$config['DB_CONFIG']);
         Superglobal::$config = $config;
-        $this->config = $config;
+        $this->config = Superglobal::$config;
+        $zh_cn=require_once BASEDIR . '/sugaophp/Lang/zh-cn.php';
+        foreach($zh_cn as $k => $v){
+            L($k,$v);
+        }
     }
 
     /**
