@@ -28,6 +28,9 @@ $config= [
 //            '\\sugaophp\\Behavior\\appconfig',
 //            '\\sugaophp\\Behavior\\appconfig2',
         ],
+        'view_parse'    =>  array(
+            '\\sugaophp\\Behavior\\ParseTemplateBehavior', // 模板解析 支持PHP、内置模板引擎和第三方模板引擎
+        ),
     ],
     //
     'template' => [

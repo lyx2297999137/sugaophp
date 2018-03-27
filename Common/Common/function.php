@@ -196,3 +196,6 @@ function uasort_func($a, $b) {
     }
     return ($a['value'] < $b['value']) ? 1 : -1;
 }
+function return666($str){
+    return '666'.$str;
+}

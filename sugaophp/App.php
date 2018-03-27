@@ -12,9 +12,9 @@ class App {
     public function init() {
         $this->_setDefaultTimezone();
         $this->require_base();
-        $this->whoops();
-        $this->handle();
-        $this->sitelog();
+//        $this->whoops();
+//        $this->handle();
+//        $this->sitelog();
         $this->route();
     }
 
@@ -22,7 +22,6 @@ class App {
      * 引入基本的文件
      */
     private function require_base() {
-        require_once BASEDIR . '/sugaophp/define.php';
         require_once BASEDIR . '/Common/Common/function.php';
         require_once BASEDIR . '/sugaophp/function.php';
         require_once BASEDIR . '/Common/Config/config.php';

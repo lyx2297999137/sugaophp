@@ -12,16 +12,20 @@ class Route {
             $module = isset($_GET['module']) ? $_GET['module'] : $config['DEFAULT_MODULE'];
             $controller = isset($_GET['controller']) ? $_GET['controller'] : $config['DEFAULT_CONTROLLER'];
             $action = isset($_GET['action']) ? $_GET['action'] : $config['DEFAULT_ACTION'];
-            $controllerstr = 'App\\' . $module . '\\' . 'Controller\\' . $controller . 'Controller';
+            if ($module == 'Addons') {
+                $controllerstr = 'App\\' . $module . '\\' . $controller . '\\' . $controller . 'Controller';
+            } else {
+                $controllerstr = 'App\\' . $module . '\\' . 'Controller\\' . $controller . 'Controller';
+            }
             Superglobal::$methods = array('module' => $module, 'controller' => $controller, 'action' => $action);
+            require_once BASEDIR . '/sugaophp/define.php';
             $controllerModel = new $controllerstr();
             $controllerModel->$action();
-        }
-        else if($config['URL_MODEL'] ==2){
-            $request_uri=$_SERVER['REQUEST_URI'];
-            $uri_arr=explode('/', $request_uri);
-            $controller=$uri_arr[1];
-            $action=$uri_arr[2];
+        } else if ($config['URL_MODEL'] == 2) {
+            $request_uri = $_SERVER['REQUEST_URI'];
+            $uri_arr = explode('/', $request_uri);
+            $controller = $uri_arr[1];
+            $action = $uri_arr[2];
             $controllerstr = 'App\\Api\\' . 'Controller\\' . $controller . 'Controller';
             $controllerModel = new $controllerstr();
             $controllerModel->$action();
@@ -30,6 +34,7 @@ class Route {
 
     public function app_init() {
         $this->app_config_parse('app_init');
+        $this->app_config_parse('view_parse');
     }
 
     /**
@@ -46,25 +51,7 @@ class Route {
             } else {
                 Hook::add($param, $app_init_config);
             }
-            $name = '张三';
-            Hook::listen($param, $name);
         }
-
-//        if ($param) {
-//            $app_configs = Superglobal::$config['app'];
-//            $app_init_config = $app_configs[$param];
-//            if (is_array($app_init_config)) {
-//                foreach ($app_init_config as $app_init_config_one) {
-//                    list($method, $action) = explode('.', $app_init_config_one);
-//                    $class = new $method();
-//                    $class->$action();
-//                }
-//            } else {
-//                list($method, $action) = explode('.', $app_init_config);
-//                $class = new $method();
-//                $class->$action();
-//            }
-//        }
     }
 
 }
